@@ -20,7 +20,7 @@ def collect_data(id_list):
 
         temp["Name"] = quote["companyName"]
         temp["Value"] = quote["currentValue"]
-        temp["Change"] = quote["change"]
+        temp["Change"] = quote["change"] if (quote["change"][0] == '-') else '+' + quote["change"]
         temp["Change_type"] = quote["change"][0] if (quote["change"][0] == '-') else '+'
 
         print(temp)

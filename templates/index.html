@@ -7,20 +7,25 @@
   <title>Bse dashboard</title>
 
 
-  <link rel="stylesheet" href={{ url_for('static', filename='css/style.css') }}>
+  <link rel="stylesheet" href={{ url_for('static', filename='css/a.css') }}>
 
 </head>
 
 <body>
 
 {% for company in data %}
-<article class = "card">
-    <div>
-        Name = {{company.Name}}
-        Value = {{company.Value}}
-        change = {{company.Change}}
+<div class = "card">
+    <div class = "header" >
+
+<h3>{{company.Name}}</h3>      
+
+    </div>
+    <div class="num">
+      {{company.Value}}<span style=" font-size: 50%; margin-left: 1vw; color: {% if company.Change_type == '+' %} {{ 'green' }} {%  else %} {{ 'red' }} {% endif %};">{{company.Change}}</span>
+
+        
     </div>
 
-</article>
+  </div>
 
 {% endfor %}

@@ -3,7 +3,8 @@ from data_collector import bookmark_stock_data
 
 
 app = Flask(__name__)
-
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+app.config['TESTING'] = True
 
 @app.route('/')
 def dashboard():
