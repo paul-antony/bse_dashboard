@@ -130,3 +130,7 @@ dmypy.json
 
 # python virtualenv file
 .env/
+
+# bsedata cache files
+indices.json
+stk.json
