@@ -29,5 +29,6 @@ def collect_data(id_list):
 
     return data
 
+def bookmark_stock_data():
 
-collect_data(read_bookmark())
+    return collect_data(read_bookmark())

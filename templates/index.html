@@ -1,0 +1,26 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Bse dashboard</title>
+
+
+  <link rel="stylesheet" href={{ url_for('static', filename='css/style.css') }}>
+
+</head>
+
+<body>
+
+{% for company in data %}
+<article class = "card">
+    <div>
+        Name = {{company.Name}}
+        Value = {{company.Value}}
+        change = {{company.Change}}
+    </div>
+
+</article>
+
+{% endfor %}
