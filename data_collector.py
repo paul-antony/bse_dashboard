@@ -15,6 +15,7 @@ def collect_data(id_list):
     data = []
 
     for id in id_list:
+        print(id)
         quote = bse.getQuote(id)
         temp = {}
 
