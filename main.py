@@ -9,7 +9,8 @@ app.config['TESTING'] = True
 @app.route('/')
 def dashboard():
 
-    return  render_template('index.html')
+    data = bookmark_stock_data()
+    return  render_template('index.html',data=data)
 
 
 @app.route('/test')

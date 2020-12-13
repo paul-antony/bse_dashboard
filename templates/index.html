@@ -6,44 +6,27 @@
 
   <title>Bse dashboard</title>
 
-  <link rel="icon" href="data:,">
+
   <link rel="stylesheet" href={{ url_for('static', filename='css/a.css') }}>
 
 </head>
 
 <body>
-    <div id="list">
+
+{% for company in data %}
+<div class = "card">
+    <div class = "header" >
+
+<h3>{{company.Name}}</h3>      
 
     </div>
-    <script>
+    <div class="num">
+      {{company.Value}}<span style=" font-size: 50%; margin-left: 1vw; color: {% if company.Change_type == '+' %} {{ 'green' }} {%  else %} {{ 'red' }} {% endif %};">{{company.Change}}</span>
 
-        fetch('/wishlist/')
-      .then(function (response) {
-          return response.json();
-      }).then(function (text) {
-          for (x in text){
+        
+    </div>
 
+  </div>
 
-            const newNodeString = ` <div class = "header" > <h3>${x}</h3></div> <div class="num" id="num"> 00.00<span style=" font-size: 50%; margin-left: 1vw;">+00</span></div>`
-                let div = document.createElement('div');
-                div.setAttribute("class", "card");
-                div.setAttribute("id", `${text[x]}`);
-                div.innerHTML = newNodeString;
-                document.getElementById("list").appendChild(div);
-
-
-            fetch(`/price/${text[x]}`)
-            .then(function (response) {
-            return response.json();})
-            .then(function (data){
-            var company_div = document.getElementById(data.Id);
-            var price_div = company_div.getElementsByClassName("num")[0];
-            price_div.innerHTML = `${data.Value}<span style=" font-size: 50%; margin-left: 1vw; color: ${data.Change_type === '+'? 'green':'red'};">${data.Change}</span>`;  
-            })
-
-          }
-    })
-    </script>
-
+{% endfor %}
 </body>
-
