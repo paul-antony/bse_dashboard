@@ -4,32 +4,38 @@ from bsedata.bse import BSE
 
 
 def read_bookmark(fname = "bookmark.csv"):
-    with open(fname) as csvfile:
-        wishlist = [x['id'] for x in csv.DictReader(csvfile, fieldnames = ["id","Name"])]
-
-        return wishlist
+	with open(fname) as csvfile:
+		wishlist = {x["name"][2:-1]:x["id"] for x in csv.DictReader(csvfile, fieldnames = ["id","name"])}
+		return wishlist
 
 def collect_data(id_list):
 
-    bse = BSE(update_codes = True)
-    data = []
+	data = []
+	for id in id_list:
+		data.append(company_price_data(id))
 
-    for id in id_list:
-        print(id)
-        quote = bse.getQuote(id)
-        temp = {}
-
-        temp["Name"] = quote["companyName"]
-        temp["Value"] = quote["currentValue"]
-        temp["Change"] = quote["change"] if (quote["change"][0] == '-') else '+' + quote["change"]
-        temp["Change_type"] = quote["change"][0] if (quote["change"][0] == '-') else '+'
-
-        print(temp)
-
-        data.append(temp)
-
-    return data
+	return data
 
 def bookmark_stock_data():
 
-    return collect_data(read_bookmark())
+	wishlist = read_bookmark()
+	id_list = [wishlist[x] for x in wishlist.keys()]
+	print(id_list)
+
+	return collect_data(id_list)
+
+
+
+def company_price_data(id):
+
+	bse = BSE()
+
+	quote = bse.getQuote(id)
+	company = {}
+	company["Id"] = id
+	company["Name"] = quote["companyName"]
+	company["Value"] = quote["currentValue"]
+	company["Change"] = quote["change"] if (quote["change"][0] == '-') else '+' + quote["change"]
+	company["Change_type"] = quote["change"][0] if (quote["change"][0] == '-') else '+'
+
+	return company
