@@ -17,6 +17,22 @@
     </div>
     <script>
 
+      var refresh = (companyList) => {
+        //console.log("apple");
+        if(document.visibilityState === "visible"){
+          //console.log("open")
+        for (company in companyList){
+
+          fetch(`/price/${text[x]}`)
+            .then(function (response) {
+            return response.json();})
+            .then(function (data){
+            var company_div = document.getElementById(data.Id);
+            var price_div = company_div.getElementsByClassName("num")[0];
+            price_div.innerHTML = `${data.Value}<span style=" font-size: 50%; margin-left: 1vw; color: ${data.Change_type === '+'? 'green':'red'};">${data.Change}</span>`;  
+            })
+      }}}
+
         fetch('/wishlist/')
       .then(function (response) {
           return response.json();
@@ -41,7 +57,12 @@
             price_div.innerHTML = `${data.Value}<span style=" font-size: 50%; margin-left: 1vw; color: ${data.Change_type === '+'? 'green':'red'};">${data.Change}</span>`;  
             })
 
+            
+
           }
+          setInterval(refresh, 10000, setInterval);
+
+      
     })
     </script>
 
