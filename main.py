@@ -1,25 +1,20 @@
 from flask import Flask, render_template,request, jsonify
-from data_collector import bookmark_stock_data, company_price_data,read_bookmark
+from data_collector import bookmark_stock_data, company_price_data,read_bookmark,company_data
 import json
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.config['TESTING'] = True
 
+
+
 @app.route('/')
 def dashboard():
 
-    data = bookmark_stock_data()
-    return  render_template('index.html',data=data)
-
-
-@app.route('/test')
-def test():
-
-    return  render_template('test.html')
+    return  render_template('dashboard.html')
 
 @app.route('/price/<id>', methods=['GET'])
-def get_company_data(id):
+def get_company_price(id):
     # GET request
     if request.method == 'GET':
         data = company_price_data(id)
@@ -33,6 +28,13 @@ def get_company_wishlist():
         # print(json.dump(data))
         return json.dumps(data)
 
+
+@app.route('/data/<id>', methods=['GET'])
+def get_company_data(id):
+    # GET request
+    if request.method == 'GET':
+        data = company_data(id)
+        return render_template('index.html',company=data)
 
 if __name__ == '__main__':
     app.run()

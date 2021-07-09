@@ -39,3 +39,26 @@ def company_price_data(id):
 	company["Change_type"] = quote["change"][0] if (quote["change"][0] == '-') else '+'
 
 	return company
+
+
+def company_data(id):
+	bse = BSE()
+
+	quote = bse.getQuote(id)
+	company = {}
+
+	company["Id"] = id
+	company["Name"] = quote["companyName"]
+	company["Value"] = quote["currentValue"]
+	company["Change"] = quote["change"] if (quote["change"][0] == '-') else '+' + quote["change"]
+	company["Change_type"] = quote["change"][0] if (quote["change"][0] == '-') else '+'
+
+	company["ftweekHigh"] = quote["52weekHigh"]
+	company["ftweekLow"] = quote["52weekLow"]
+	company["dayHigh"] = quote["dayHigh"]
+	company["dayLow"] = quote["dayLow"]
+	company["previousClose"] = quote["previousClose"]
+	company["previousOpen"] = quote["previousOpen"]
+
+	return company
+

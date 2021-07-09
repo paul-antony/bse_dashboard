@@ -9,24 +9,65 @@
 
   <link rel="stylesheet" href={{ url_for('static', filename='css/a.css') }}>
 
-</head>
+</head>>
 
 <body>
 
-{% for company in data %}
-<div class = "card">
-    <div class = "header" >
 
-<h3>{{company.Name}}</h3>      
 
-    </div>
-    <div class="num">
+
+  <div class="card"> 
+    <div class="header"> 
+      <h3>{{company.Name}}</h3>
+    </div> 
+    <div class="num" id="num">
       {{company.Value}}<span style=" font-size: 50%; margin-left: 1vw; color: {% if company.Change_type == '+' %} {{ 'green' }} {%  else %} {{ 'red' }} {% endif %};">{{company.Change}}</span>
-
-        
     </div>
+  
+      <table class="dataTable">
+        <tr>
+          <td>52weekHigh</td>
+          <td>-</td>
+          <td>{{company.ftweekHigh}}</td>
+        </tr>
+
+        <tr>
+          <td>52weekLow</td>
+          <td>-</td>
+          <td>{{company.ftweekLow}}</td>
+        </tr>
+
+        <tr>
+          <td>dayHigh</td>
+          <td>-</td>
+          <td>{{company.dayHigh}}</td>
+        </tr>
+
+        <tr>
+          <td>dayLow</td>
+          <td>-</td>
+          <td>{{company.dayLow}}</td>
+        </tr>
+
+        <tr>
+          <td>previousClose</td>
+          <td>-</td>
+          <td>{{company.previousClose}}</td>
+        </tr>
+
+        <tr>
+          <td>previousOpen</td>
+          <td>-</td>
+          <td>{{company.previousOpen}}</td>
+        </tr>
+
+
+
+      </table>
+
 
   </div>
+  
 
-{% endfor %}
-</body>
+
+</body>>

@@ -40,7 +40,7 @@
           for (x in text){
 
 
-            const newNodeString = ` <div class = "header" > <h3>${x}</h3></div> <div class="num" id="num"> 00.00<span style=" font-size: 50%; margin-left: 1vw;">+00</span></div>`
+            const newNodeString = ` <div class = "header" > <a href = "/data/${text[x]}" style="text-decoration: none; color: inherit;"><h3>${x}</h3></a></div> <div class="num" id="num"> 00.00<span style=" font-size: 50%; margin-left: 1vw;">+00</span></div>`
                 let div = document.createElement('div');
                 div.setAttribute("class", "card");
                 div.setAttribute("id", `${text[x]}`);
