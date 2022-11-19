@@ -134,3 +134,4 @@ dmypy.json
 # bsedata cache files
 indices.json
 stk.json
+.vercel
