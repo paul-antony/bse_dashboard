@@ -29,9 +29,21 @@ def bookmark_stock_data():
 def company_price_data(id):
 
 	bse = BSE()
-
-	quote = bse.getQuote(id)
 	company = {}
+
+	try:
+		quote = bse.getQuote(id)
+		
+	except Exception as e:
+		company["Id"] = id
+		company["Name"] = ''
+		company["Value"] = ''
+		company["Change_type"] = '-'
+		company["Change"] = e.args[0]
+	
+		return company
+
+
 	company["Id"] = id
 	company["Name"] = quote["companyName"]
 	company["Value"] = quote["currentValue"]
@@ -43,9 +55,28 @@ def company_price_data(id):
 
 def company_data(id):
 	bse = BSE()
-
-	quote = bse.getQuote(id)
 	company = {}
+
+	try:
+
+		quote = bse.getQuote(id)
+		
+	except Exception as e:
+		company["Id"] = id
+		company["Name"] = ''
+		company["Value"] = ''
+		company["Change"] = e.args[0]
+		company["Change_type"] = '-'
+
+		company["ftweekHigh"] = '00'
+		company["ftweekLow"] = '00'
+		company["dayHigh"] = '00'
+		company["dayLow"] = '00'
+		company["previousClose"] = '00'
+		company["previousOpen"] = '00'
+		return company
+		
+
 
 	company["Id"] = id
 	company["Name"] = quote["companyName"]
