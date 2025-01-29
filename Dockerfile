@@ -1,5 +1,11 @@
+# Use an official lightweight Python image
+FROM python:3.10-slim
+
+# Set the working directory inside the container
+WORKDIR /app
+
 # Copy only requirements file first (for better caching)
-COPY requirements.txt .
+COPY . /app
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
@@ -11,8 +17,6 @@ RUN apt-get update && apt-get install -y wget unzip && \
     rm google-chrome-stable_current_amd64.deb && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Now copy the rest of the application files
-COPY . .
 
 # Expose the Flask default port
 EXPOSE 5000
