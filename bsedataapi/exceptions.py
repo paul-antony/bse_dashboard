@@ -2,7 +2,7 @@
 
     MIT License
 
-    Copyright (c) 2021 Paul Antony
+    Copyright (c) 2018 - 2024 Shrey Dabhi
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -25,32 +25,17 @@
 """
 
 
-import json
-import requests
-import datetime
+class InvalidStockException(Exception):
+    """
+    Exception raised for stocks which have been suspended or no longer trading on BSE.
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36 Edg/83.0.478.45'
-}
+    :param status: the status of the stock as mentioned on BSE website
+    """
 
-def getHistoricData(scripCode, fromdate, todate):
+    def __init__(self, status: str = "Inactive stock"):
+        if status == "":
+            self.status = "Inactive stock"
+        else:
+            self.status = status
+        super().__init__(self.status)
 
-    assert len(fromdate) == 8 , "fromdate should be in the format YYYMMDD"
-    assert len(todate) == 8 , "todate should be in the format YYYMMDD"
-
-
-
-
-    baseurl = '''https://api.bseindia.com/BseIndiaAPI/api/StockReachGraph/w?'''
-    URL = baseurl + '''scripcode={}&flag=1&fromdate={}&todate={}&seriesid='''.format(scripCode, fromdate, todate)
-    res = requests.get(URL, headers=headers)
-
-    # extracting the data from the response
-    data = json.loads(res.content.decode('utf-8'))
-
-    data = json.loads(data['Data'])
-
-    # formating the date
-    res = [{'date': x['dttm'], "value": float(x['vale1']), "vol": int(x['vole'])} for x in data]
-
-    return res

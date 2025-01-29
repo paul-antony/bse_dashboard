@@ -2,7 +2,7 @@
 
     MIT License
 
-    Copyright (c) 2019 Paul Antony
+    Copyright (c) 2018 - 2024 Shrey Dabhi
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -24,28 +24,4 @@
 
 """
 
-
-import json
-import requests
-
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36 Edg/83.0.478.45'
-}
-
-
-def getPeriodTrend(scripCode, timePeriod):
-
-    assert timePeriod in ['1M', '3M', '6M', '12M'], "timePeriod should be one of the following options '1M', '3M', '6M' and '12M'"
-
-    baseurl = '''https://api.bseindia.com/BseIndiaAPI/api/StockReachGraph/w?'''
-    URL = baseurl + '''scripcode={}&flag={}&fromdate=&todate=&seriesid='''.format(scripCode, timePeriod)
-    res = requests.get(URL, headers=headers)
-
-    # extracting the data from the response
-    data = json.loads(res.content.decode('utf-8'))
-    data = json.loads(data['Data'])
-
-    # formating the data
-    res = [{'date': x['dttm'], "value": float(x['vale1']), "vol": int(x['vole'])} for x in data]
-
-    return res
+name = "bsedataapi"

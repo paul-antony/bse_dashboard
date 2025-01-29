@@ -2,7 +2,7 @@
 
     MIT License
 
-    Copyright (c) 2018 Shrey Dabhi
+    Copyright (c) 2018 - 2024 Shrey Dabhi
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,8 @@
 
 """
 
-from . import losers, gainers, quote, indices, periodTrend,historicData
+from . import quote, indices
+import datetime
 import requests
 import json
 
@@ -36,21 +37,11 @@ class BSE(object):
     """
 
     def __init__(self, update_codes=False):
-        self.update_codes = update_codes
+        self.__update_codes = update_codes
         if update_codes:
             self.updateScripCodes()
 
-    def topGainers(self):
-        """
-        :returns: A sorted list of codes of top gainers
-        """
-        return gainers.getGainers()
 
-    def topLosers(self):
-        """
-        :returns: A sorted list of codes of top losers
-        """
-        return losers.getLosers()
 
     def getQuote(self, scripCode):
         """
@@ -73,24 +64,18 @@ class BSE(object):
 
         :returns: None
         """
-        r = requests.get('https://static.quandl.com/BSE+Descriptions/stocks.txt')
-        stk = {x.split("|")[1][3:]: x.split("|")[0][:-11] for x in r.text.split("\n") if x != '' and x.split("|")[1][:3] == 'BOM'}
-        stk.pop("CODE", None)
-        indices = {x.split("|")[1]: x.split("|")[0] for x in r.text.split("\n") if x != '' and x.split("|")[1][:3] != 'BOM'}
-        indices.pop("CODE", None)
-        f_stk = open('stk.json', 'w+')
-        f_stk.write(json.dumps(stk))
+        r = requests.get("https://pub-87b187a07d9c42109c9e6999439a583f.r2.dev/stk.json")
+        f_stk = open("stk.json", "w+")
+        f_stk.write(json.dumps(r.json()))
         f_stk.close()
-        f_indices = open('indices.json', 'w+')
-        f_indices.write(json.dumps(indices))
-        f_indices.close()
         return
+    
 
     def getScripCodes(self):
         """
         :returns: A dictionary with scrip codes as keys and company names as values
         """
-        f = open('stk.json', 'r')
+        f = open("stk.json", "r")
         return json.loads(f.read())
 
     def verifyScripCode(self, code):
@@ -100,32 +85,17 @@ class BSE(object):
         data = self.getScripCodes()
         return data.get(code)
 
-    def getPeriodTrend(self, scripCode, timePeriod):
-        """
-        Get historic price and volume trends of a stock over certain fixed period of time
-
-        :param scripCode: a stock code
-        :param timePeriod: the period of time. It can take the following values: ``'1M'``, ``'3M'``, ``'6M'`` and ``'12M'``
-        :returns: List of dictionaries with date,price,vol data
-        """
-        return periodTrend.getPeriodTrend(scripCode, timePeriod)
-
-    def getHistoricData(self, scripCode, fromdate, todate):
-        """
-        Get historic price and volume trends of a stock over a given time period
-
-        :param scripCode: a stock code
-        :param fromdate: starting date in the format ```YYYYMMDD```
-        :param todate: end date in the format ```YYYYMMDD```
-        :returns: List of dictionaries with date,price,vol data for the diven time period
-        """
-        return historicData.getHistoricData(scripCode, fromdate, todate)
-
-
-
-
     def __str__(self):
-        return 'Driver Class for Bombay Stock Exchange (BSE)'
+        return "Driver Class for Bombay Stock Exchange (BSE)"
 
     def __repr__(self):
-        return '<%s: update_codes=%s> Driver Class for Bombay Stock Exchange (BSE)' % (self.__class__.__name__, self.update_codes)
+        return f"<{self.__class__.__name__}: update_codes={self.__update_codes}> Driver Class for Bombay Stock Exchange (BSE)"
+
+
+
+if __name__ == "__main__":
+    
+    bse = BSE()
+
+    quote = bse.getQuote("534976")
+    print(quote)

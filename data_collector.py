@@ -1,5 +1,7 @@
 import csv
-from bsedata.bse import BSE
+from bsedataapi.bse import BSE
+
+
 
 
 
@@ -43,7 +45,7 @@ def company_price_data(id):
 	
 		return company
 
-
+	print(quote)
 	company["Id"] = id
 	company["Name"] = quote["companyName"]
 	company["Value"] = quote["currentValue"]
@@ -77,7 +79,7 @@ def company_data(id):
 		return company
 		
 
-
+	print(bse,quote)
 	company["Id"] = id
 	company["Name"] = quote["companyName"]
 	company["Value"] = quote["currentValue"]
