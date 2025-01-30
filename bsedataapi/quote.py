@@ -45,6 +45,11 @@ browser_options.add_argument('--headless')
 browser_options.add_argument('--disable-dev-shm-usage')
 browser_options.add_argument("disable-gpu")
 browser_options.add_argument("--window-size=1920x1080")
+browser_options.add_argument("disable-infobars")
+browser_options.add_argument("--disable-extensions")
+browser_options.add_argument('--disable-application-cache')
+
+
 
 # Add custom binary paths (Render might need them)
 browser_options.binary_location = "/usr/bin/firefox"
@@ -61,6 +66,7 @@ def quote(scripCode: str) -> dict:
 
     driver.get(baseurl + scripCode)
     c = driver.page_source
+    driver.close()
     #res = requests.get(baseurl + scripCode, headers=COMMON_REQUEST_HEADERS)
     #c = res.content
 
