@@ -34,6 +34,10 @@ from selenium.webdriver.firefox.options import Options
 #from selenium.webdriver.chrome.options import Options
 #from selenium.webdriver.chrome.service import Service
 #from webdriver_manager.chrome import ChromeDriverManager
+import logging
+from selenium.webdriver.remote.remote_connection import LOGGER
+LOGGER.setLevel(logging.DEBUG)
+
 
 browser_options = Options()
 browser_options.add_argument('--no-sandbox')
