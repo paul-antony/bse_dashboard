@@ -6,7 +6,14 @@ RUN apt-get update && apt-get install -y \
     firefox-esr \
     wget \
     unzip \
-    && rm -rf /var/lib/apt/lists/*
+    xvfb \
+    libgtk-3-0 \
+    libdbus-glib-1-2 \
+    libxt6 \
+    libxrender1 \
+    libasound2 \
+    libnss3 \
+    libx11-xcb1
 
 # Install GeckoDriver
 RUN wget -q "https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux64.tar.gz" \

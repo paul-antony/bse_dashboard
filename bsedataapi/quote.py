@@ -38,9 +38,12 @@ from selenium.webdriver.firefox.options import Options
 browser_options = Options()
 browser_options.add_argument('--no-sandbox')
 browser_options.add_argument('--headless')
-#browser_options.add_argument('--disable-dev-shm-usage')
+browser_options.add_argument('--disable-dev-shm-usage')
 browser_options.add_argument("disable-gpu")
 browser_options.add_argument("--window-size=1920x1080")
+
+# Add custom binary paths (Render might need them)
+browser_options.binary_location = "/usr/bin/firefox"
 
 #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=browser_options)
 driver = webdriver.Firefox(options=browser_options)
