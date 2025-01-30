@@ -30,6 +30,7 @@ import requests
 import json
 
 
+
 class BSE(object):
     """
     Class which implements the functionality for

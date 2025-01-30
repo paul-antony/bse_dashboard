@@ -2,6 +2,7 @@ from flask import Flask, render_template,request, jsonify
 from data_collector import bookmark_stock_data, company_price_data,read_bookmark,company_data
 import json
 
+
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.config['TESTING'] = True
@@ -37,4 +38,4 @@ def get_company_data(id):
         return render_template('index.html',company=data)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=False, host='0.0.0.0', port=5000)

@@ -1,6 +1,20 @@
 # Use an official lightweight Python image
 FROM python:3.10-slim
 
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    firefox-esr \
+    wget \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install GeckoDriver
+RUN wget -q "https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux64.tar.gz" \
+    -O /tmp/geckodriver.tar.gz && \
+    tar -xvzf /tmp/geckodriver.tar.gz -C /usr/local/bin && \
+    chmod +x /usr/local/bin/geckodriver && \
+    rm /tmp/geckodriver.tar.gz
+
 # Set the working directory inside the container
 WORKDIR /app
 
@@ -9,14 +23,6 @@ COPY . /app
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Install Google Chrome (for headless browsing or automation)
-RUN apt-get update && apt-get install -y wget unzip && \
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
-    apt install -y ./google-chrome-stable_current_amd64.deb && \
-    rm google-chrome-stable_current_amd64.deb && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
-
 
 # Expose the Flask default port
 EXPOSE 5000

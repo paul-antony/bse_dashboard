@@ -28,8 +28,22 @@ from bsedata.exceptions import InvalidStockException
 from bsedata.helpers import COMMON_REQUEST_HEADERS
 from datetime import datetime as dt
 from bs4 import BeautifulSoup as bs
-import requests
-from helpers import driver
+
+from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
+#from selenium.webdriver.chrome.options import Options
+#from selenium.webdriver.chrome.service import Service
+#from webdriver_manager.chrome import ChromeDriverManager
+
+browser_options = Options()
+browser_options.add_argument('--no-sandbox')
+browser_options.add_argument('--headless')
+#browser_options.add_argument('--disable-dev-shm-usage')
+browser_options.add_argument("disable-gpu")
+browser_options.add_argument("--window-size=1920x1080")
+
+#driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=browser_options)
+driver = webdriver.Firefox(options=browser_options)
 
 
 
