@@ -24,52 +24,12 @@
 
 """
 
-from bsedata.exceptions import InvalidStockException
-from bsedata.helpers import COMMON_REQUEST_HEADERS
+from bsedataapi.exceptions import InvalidStockException
+from bsedataapi.helper import Splash_downloder
 from datetime import datetime as dt
 from bs4 import BeautifulSoup as bs
-import os
+import bsedataapi.helper as requests
 
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
-#from selenium.webdriver.chrome.options import Options
-#from selenium.webdriver.chrome.service import Service
-#from webdriver_manager.chrome import ChromeDriverManager
-import logging
-from selenium.webdriver.remote.remote_connection import LOGGER
-LOGGER.setLevel(logging.DEBUG)
-
-
-
-
-""" # Path to Firefox and GeckoDriver binaries inside your project folder
-firefox_binary_path = os.path.join(os.getcwd(), 'firefox', 'firefox-bin')  # Adjust if needed
-geckodriver_path = os.path.join(os.getcwd(), 'geckodriver', 'geckodriver')  # Adjust if needed
-
-print(firefox_binary_path, geckodriver_path)
-
-# Set Firefox options for headless mode (no GUI)
-options = Options()
-options.binary_location = firefox_binary_path  # Pointing to Firefox binary
-
-
-# Initialize WebDriver with custom Firefox and GeckoDriver paths
-driver = webdriver.Firefox(executable_path=geckodriver_path, options=options)
-
-browser_options = Options()
-browser_options.add_argument('--no-sandbox')
-browser_options.add_argument('--headless')
-browser_options.add_argument('--disable-dev-shm-usage')
-browser_options.add_argument("disable-gpu")
-browser_options.add_argument("--window-size=1920x1080")
-browser_options.add_argument("disable-infobars")
-browser_options.add_argument("--disable-extensions")
-browser_options.add_argument('--disable-application-cache')
-
-
-
-#driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=browser_options)
-driver = webdriver.Firefox(options=browser_options) """
 
 
 
@@ -77,12 +37,14 @@ driver = webdriver.Firefox(options=browser_options) """
 
 def quote(scripCode: str) -> dict:
     baseurl = """https://m.bseindia.com/StockReach.aspx?scripcd="""
-
+    """
+    driver = Splash_downloder()
     driver.get(baseurl + scripCode)
-    c = driver.page_source
-    driver.close()
-    #res = requests.get(baseurl + scripCode, headers=COMMON_REQUEST_HEADERS)
-    #c = res.content
+    c = driver.content()
+    print("--------------------------------------------",type(c)) 
+    """
+    res = requests.get(baseurl + scripCode)
+    c = res.content
 
     soup = bs(c, "lxml")
 

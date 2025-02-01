@@ -24,7 +24,7 @@
 
 """
 
-from . import quote, indices
+from . import quote
 import datetime
 import requests
 import json
@@ -52,12 +52,7 @@ class BSE(object):
         """
         return quote.quote(scripCode)
 
-    def getIndices(self, category):
-        """
-        :param category: A category of indices
-        :returns: A dictionary with details about the indices belonging to the given category
-        """
-        return indices.indices(category)
+
 
     def updateScripCodes(self):
         """

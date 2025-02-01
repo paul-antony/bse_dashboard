@@ -1,15 +1,21 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver-manager.chrome import ChromeDriverManager
+import requests
 
-chrome_options = Options()
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--disable-dev-shm-usage')
+class Splash_downloder():
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+    def __init__(self):
+        self.SPLASH_URL = "http://splash:8050/render.html"
+        self.response = None
 
-COMMON_REQUEST_HEADERS = {
-    "User-Agent": "'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36''Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'"
-}
+    def get(self,url):
+
+        self.response = requests.get(self.SPLASH_URL, params={"url": url, "wait": 2})
+
+    def content(self):
+
+        return self.response.content
+
+def get(url):
+    req = Splash_downloder()
+    req.get(url)
+
+    return req.response

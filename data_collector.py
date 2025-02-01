@@ -22,7 +22,7 @@ def bookmark_stock_data():
 
 	wishlist = read_bookmark()
 	id_list = [wishlist[x] for x in wishlist.keys()]
-	print(id_list)
+	#print(id_list)
 
 	return collect_data(id_list)
 
@@ -45,7 +45,7 @@ def company_price_data(id):
 	
 		return company
 
-	print(quote)
+	#print(quote)
 	company["Id"] = id
 	company["Name"] = quote["companyName"]
 	company["Value"] = quote["currentValue"]
@@ -58,6 +58,7 @@ def company_price_data(id):
 def company_data(id):
 	bse = BSE()
 	company = {}
+	quote = bse.getQuote(id)
 
 	try:
 
@@ -79,7 +80,7 @@ def company_data(id):
 		return company
 		
 
-	print(bse,quote)
+	#print(bse,quote)
 	company["Id"] = id
 	company["Name"] = quote["companyName"]
 	company["Value"] = quote["currentValue"]

@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  bse-dashboard:
+    build: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - splash
+    environment:
+      - SPLASH_URL=http://splash:8050
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: "500MB"
+
+  splash:
+    image: scrapinghub/splash
+    ports:
+      - "8050:8050"
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: "500MB"
