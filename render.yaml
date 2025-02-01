@@ -3,7 +3,7 @@ services:
     type: web
     env: docker
     repo: https://github.com/paul-antony/bse_dashboard
-    repoBranch: scrappy_deployment  # Change to the branch you want to deploy
+    branch: scrappy_deployment
     dockerfilePath: Dockerfile
     plan: free
     envVars:
