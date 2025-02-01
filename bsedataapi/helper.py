@@ -1,9 +1,11 @@
 import requests
+import os
 
 class Splash_downloder():
 
     def __init__(self):
-        self.SPLASH_URL = "http://splash:8050/render.html"
+        #self.SPLASH_URL = "http://splash:8050/render.html"
+        self.SPLASH_URL = os.getenv("SPLASH_URL", "http://splash:8050").rstrip("/") + "/render.html"
         self.response = None
 
     def get(self,url):
