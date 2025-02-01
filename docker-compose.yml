@@ -1,14 +1,15 @@
-version: '3.8'
 
 services:
   bse-dashboard:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - SPLASH_URL=https://splash-server:8050
     ports:
       - "5000:5000"
     depends_on:
-      - splash
-    environment:
-      - SPLASH_URL=http://splash:8050
+      - splash-server
     restart: always
     deploy:
       resources:
@@ -16,8 +17,12 @@ services:
           cpus: "0.1"
           memory: "500MB"
 
-  splash:
-    image: scrapinghub/splash
+  splash-server:
+    build:
+      context: .
+      dockerfile: splash.Dockerfile
+    environment:
+      - PORT=8050
     ports:
       - "8050:8050"
     restart: always
@@ -26,3 +31,6 @@ services:
         limits:
           cpus: "0.1"
           memory: "500MB"
+
+
+
