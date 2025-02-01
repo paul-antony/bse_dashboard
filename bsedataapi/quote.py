@@ -28,6 +28,7 @@ from bsedata.exceptions import InvalidStockException
 from bsedata.helpers import COMMON_REQUEST_HEADERS
 from datetime import datetime as dt
 from bs4 import BeautifulSoup as bs
+import os
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -38,6 +39,22 @@ import logging
 from selenium.webdriver.remote.remote_connection import LOGGER
 LOGGER.setLevel(logging.DEBUG)
 
+
+
+
+""" # Path to Firefox and GeckoDriver binaries inside your project folder
+firefox_binary_path = os.path.join(os.getcwd(), 'firefox', 'firefox-bin')  # Adjust if needed
+geckodriver_path = os.path.join(os.getcwd(), 'geckodriver', 'geckodriver')  # Adjust if needed
+
+print(firefox_binary_path, geckodriver_path)
+
+# Set Firefox options for headless mode (no GUI)
+options = Options()
+options.binary_location = firefox_binary_path  # Pointing to Firefox binary
+
+
+# Initialize WebDriver with custom Firefox and GeckoDriver paths
+driver = webdriver.Firefox(executable_path=geckodriver_path, options=options)
 
 browser_options = Options()
 browser_options.add_argument('--no-sandbox')
@@ -51,11 +68,8 @@ browser_options.add_argument('--disable-application-cache')
 
 
 
-# Add custom binary paths (Render might need them)
-browser_options.binary_location = "/usr/bin/firefox"
-
 #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=browser_options)
-driver = webdriver.Firefox(options=browser_options)
+driver = webdriver.Firefox(options=browser_options) """
 
 
 

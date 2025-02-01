@@ -1,44 +1,18 @@
-#Use an official lightweight Python image
-FROM python:3.10-slim
+FROM python:3.8-slim
 
-# Install dependencies
+# Install bash (it might already be included in some images, but we'll ensure it's there)
 RUN apt-get update && apt-get install -y \
-    firefox-esr \
-    wget \
-    unzip \
-    xvfb \
-    libgtk-3-0 \
-    libdbus-glib-1-2 \
-    libxt6 \
-    libxrender1 \
-    libasound2 \
-    libnss3 \
-    libx11-xcb1
+    bash \
+    && apt-get clean
 
-# Install a stable version of GeckoDriver (specify a known good version)
-RUN wget -q "https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux64.tar.gz" \
-    -O /tmp/geckodriver.tar.gz && \
-    tar -xvzf /tmp/geckodriver.tar.gz -C /usr/local/bin && \
-    chmod +x /usr/local/bin/geckodriver && \
-    rm /tmp/geckodriver.tar.gz
+# Set the working directory inside the container (optional)
+WORKDIR /opt/app
 
+# Install Python dependencies if you have a requirements.txt (optional step)
+# COPY requirements.txt /opt/app/
+# RUN pip install --no-cache-dir -r requirements.txt
 
-# Set the Firefox binary location explicitly
-ENV FIREFOX_BIN=/usr/bin/firefox
+# Start a Bash shell when the container runs
+CMD ["/bin/bash"]
 
-
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy the application files to the container
-COPY . /app
-
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Expose the Flask default port
-EXPOSE 5000
-
-# Command to run Flask app with Gunicorn (or just flask for development)
-#CMD ["gunicorn", "-b", "0.0.0.0:5000", "main:app"]
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "main:app", "--timeout", "60"]
+# start comand : docker run -it -v C:/Users/paul/Desktop/bse_dashboard:/opt/app python-bash-container
