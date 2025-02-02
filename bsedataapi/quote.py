@@ -24,38 +24,12 @@
 
 """
 
-from bsedata.exceptions import InvalidStockException
-from bsedata.helpers import COMMON_REQUEST_HEADERS
+from bsedataapi.exceptions import InvalidStockException
+from bsedataapi.helper import COMMON_REQUEST_HEADERS, driver
 from datetime import datetime as dt
 from bs4 import BeautifulSoup as bs
 
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
-#from selenium.webdriver.chrome.options import Options
-#from selenium.webdriver.chrome.service import Service
-#from webdriver_manager.chrome import ChromeDriverManager
-import logging
-from selenium.webdriver.remote.remote_connection import LOGGER
-LOGGER.setLevel(logging.DEBUG)
 
-
-browser_options = Options()
-browser_options.add_argument('--no-sandbox')
-browser_options.add_argument('--headless')
-browser_options.add_argument('--disable-dev-shm-usage')
-browser_options.add_argument("disable-gpu")
-browser_options.add_argument("--window-size=1920x1080")
-browser_options.add_argument("disable-infobars")
-browser_options.add_argument("--disable-extensions")
-browser_options.add_argument('--disable-application-cache')
-
-
-
-# Add custom binary paths (Render might need them)
-browser_options.binary_location = "/usr/bin/firefox"
-
-#driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=browser_options)
-driver = webdriver.Firefox(options=browser_options)
 
 
 
@@ -66,7 +40,7 @@ def quote(scripCode: str) -> dict:
 
     driver.get(baseurl + scripCode)
     c = driver.page_source
-    driver.close()
+    #driver.close()
     #res = requests.get(baseurl + scripCode, headers=COMMON_REQUEST_HEADERS)
     #c = res.content
 

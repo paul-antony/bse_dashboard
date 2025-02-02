@@ -40,5 +40,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
 
 # Command to run Flask app with Gunicorn (or just flask for development)
-#CMD ["gunicorn", "-b", "0.0.0.0:5000", "main:app"]
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "main:app", "--timeout", "60"]
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "main:app"]
