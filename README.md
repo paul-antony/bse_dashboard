@@ -19,9 +19,16 @@ You can test the live version of the dashboard here: [BSE Dashboard](https://bse
 
 ## Setup and Installation
 
-Follow these steps to set up and run the project locally or in a Dockerized environment.
+Follow these steps to set up and run the project locally in a Dockerized environment.
 
-```
+Clone the repo
+   ```sh
+    git clone -b scrappy_deployment https://github.com/paul-antony/bse_dashboard.git
+   ```
+
+build and run docker containers
+
+```sh
 docker-compose up --build
 ```
 
@@ -32,7 +39,7 @@ The Flask app will be accessible at
 
 ## Environment Variables
 
-**SPLASH_URL**: The URL of the Splash service (default: http://splash-server:8050)
+***SPLASH_URL***: The URL of the Splash service (default: _http://splash-server:8050_)
 
 the url is used by flask to connct to splash to retrive the scrapped website contents
 default value can be used when running locally using docker but the value needs to be updated in config if deployed to [Render](https://render.com/)
